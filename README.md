@@ -81,31 +81,32 @@ If you don't already have an SSL certificate for your domain, here are instructi
 
     - You should already have your SSH server configured with access by SSH key
     - On the control node add your SSH key to the ssh-agent, make sure you can connect to the server **without a password**
-    - If using not default SSH port, set `sshd_port` variable in vars.yaml
+    - If using not default SSH port, set `sshd_port` variable in *host_vars/&lt;host&gt;.yaml*
 
 ## Setting up your Pocket node
 
-Make sure you've read [These playbooks do not](#these-playbooks-do-not) section above, got your domain name, created DNS record, and have SSL certificate on the target node.
+Before continuing, you should have followed the steps in the [These playbooks do not](#these-playbooks-do-not) section above, got [your domain name with a DNS record](docs/dns-record.md), and have an [SSL certificate on the target node](docs/certbot-certificate.md).
 
-Clone this repository on your control node:
+1. Clone this repository on your control node:
 
 ```shell
 git clone https://github.com/crabvk/pocket-ansible.git
 cd pocket-ansible
 ```
 
-Create file *hosts* and write a list of your servers (probably you have only one for now). Use the same `Host` names as in your *~/.ssh/config* file.
+2. Create file *hosts* and write a list of your servers (probably you have only one for now). Use the same `Host` names as in your *~/.ssh/config* file.
 
-Copy *host_vars/host.example.yaml* to *host_vars/&lt;host&gt;.yaml*, read comments and set the variables accordingly.
+3. Copy *host_vars/host.example.yaml* to *host_vars/&lt;host&gt;.yaml*, read comments and set the variables accordingly.
 
-Setup your Pocket node:
+4. Setup your Pocket node:
 
 ```shell
 ansible-playbook -i hosts setup.yaml
 ```
 
-Follow the steps in [Deploy Your Validator & Full Nodes](https://docs.pokt.network/home/paths/node-runner#deploy-your-validator-and-full-nodes).
-To execute `pocket` commands open the shell as pocket user:
+5. Follow the steps in [Deploy Your Validator & Full Nodes](https://docs.pokt.network/home/paths/node-runner#deploy-your-validator-and-full-nodes).
+
+> NOTE: To execute `pocket` commands open the shell as user pocket:
 
 ```shell
 sudo -u pocket bash
