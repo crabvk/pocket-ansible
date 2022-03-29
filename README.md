@@ -13,6 +13,7 @@
 - [These playbooks do not](#these-playbooks-do-not)
 - [Setting up your Pocket node](#setting-up-your-pocket-node)
 - [Check the correctness of your setup](#check-the-correctness-of-your-setup)
+- [Tested on](#tested-on)
 - [Contributions](#contributions)
 
 ## Prerequisites
@@ -128,6 +129,17 @@ and check the correctness of setup with:
 ```shell
 ansible-playbook -i hosts check.yaml
 ```
+
+To start your Pocket node in production mode run:
+
+```shell
+systemctl start pocket
+```
+
+## Tested on
+
+Control node: Artix Linux  
+Managed node: Arch Linux, Ubuntu 20.04
 
 ## Contributions
 
