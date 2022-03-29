@@ -1,0 +1,9 @@
+{
+    "relay_network_id": "0003",
+    "payload": {
+        "data": "{\"jsonrpc\":\"2.0\",\"method\":\"info.getBlockchainID\",\"params\":{\"alias\":\"X\"},\"id\":1}",
+        "method": "POST",
+        "path": "ext/info",
+        "headers": {}
+    }
+}

@@ -1,0 +1,5 @@
+table inet filter {
+    chain input {
+        tcp dport {{ sshd_port }} accept comment "allow sshd"
+    }
+}

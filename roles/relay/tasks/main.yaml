@@ -1,0 +1,44 @@
+- name: Check Pocket node is publicly available
+  ansible.builtin.uri:
+    url: https://{{ pocket_host }}/v1/query/height
+    method: POST
+  become: no
+  delegate_to: 127.0.0.1
+
+- name: Get stats for genesis.json
+  ansible.builtin.stat:
+    path: "{{ pocket_home }}/.pocket/config/genesis.json"
+    checksum_algorithm: sha512
+  register: genesis
+
+- name: Fail when genesis.json checksum is wrong
+  ansible.builtin.fail:
+    msg: genesis.json has wrong checksum
+  when: genesis.stat.checksum != '68c45bc5003c0996fece4dacc39eb2e31f92c8fa3ad1ca905d40ba4ecfea4ee200d3862eb674a07122f6ab716dc1a69679bf8f276a6239a87eb0e4975b2ab007'
+
+- name: Request current Pocket block height
+  ansible.builtin.uri:
+    url: http://127.0.0.1:{{ pocket_rpc_port }}/v1/query/height
+    method: POST
+    body_format: json
+  register: current_height
+
+- name: Request public Pocket block height
+  ansible.builtin.uri:
+    url: https://supply.research.pokt.network:8192/height
+  register: public_height
+
+- name: Fail when Pocket node is not fully synced
+  ansible.builtin.fail:
+    msg: "Pocket node is not fully synced. Current height: {{ current_height.json.height }}, public height: {{ public_height.json }}"
+  when: current_height.json.height not in range(public_height.json - 1, public_height.json + 1)
+
+- name: Read Pocket chains file
+  ansible.builtin.slurp:
+    src: "{{ pocket_home }}/.pocket/config/chains.json"
+  register: chains
+
+- include_tasks: request.yaml
+  loop: "{{ chains['content'] | b64decode | from_json }}"
+  loop_control:
+    label: "{{ item.id }}"

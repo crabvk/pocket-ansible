@@ -1,0 +1,6 @@
+table inet filter {
+    chain input {
+        tcp dport {{ pocket_p2p_port }} accept comment "allow pocket"
+        udp dport {{ pocket_p2p_port }} accept comment "allow pocket"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "relay_network_id": "0001",
+    "payload": {
+        "data": "{}",
+        "method": "POST",
+        "path": "v1/query/height",
+        "headers": {}
+    }
+}

@@ -1,0 +1,24 @@
+- name: Install nftables
+  ansible.builtin.package:
+    name: nftables
+
+- name: Create nftables.d directory
+  ansible.builtin.file:
+    path: /etc/nftables.d
+    mode: 0640
+    state: directory
+
+- name: Copy nftables config
+  ansible.builtin.copy:
+    src: nftables.conf
+    dest: /etc/nftables.conf
+    mode: 0640
+  notify:
+    - Restart nftables
+
+- name: Create nftables config for SSH
+  ansible.builtin.template:
+    src: nftables/sshd.conf.j2
+    dest: /etc/nftables.d/sshd.conf
+  notify:
+    - Restart nftables

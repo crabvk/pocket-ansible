@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  pre_tasks:
+    - include_tasks: tasks/check_dns.yaml
+  roles:
+    - firewall
+    - pocket
+    - web

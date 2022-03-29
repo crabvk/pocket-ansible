@@ -1,0 +1,65 @@
+- name: Find Pocket binary
+  block:
+    - name: Print Pocket binary path
+      ansible.builtin.shell: command -v pocket
+      register: found_pocket_binary
+
+    - name: Set pocket_binary variable
+      ansible.builtin.set_fact:
+        pocket_binary: "{{ found_pocket_binary.stdout }}"
+  when: pocket_binary is not defined
+
+- name: Get stats of Pocket binary
+  ansible.builtin.stat:
+    path: "{{ pocket_binary }}"
+  register: binary_stat
+
+- name: Fail when Pocket binary is not found
+  ansible.builtin.fail:
+    msg: "Pocket binary not found on the host machine: {{ pocket_binary }}"
+  when: not binary_stat.stat.exists
+
+- import_tasks: check_version.yaml
+
+- name: Create Pocket group
+  ansible.builtin.group:
+    name: pocket
+    system: yes
+
+- name: Create Pocket user
+  ansible.builtin.user:
+    name: pocket
+    group: pocket
+    home: "{{ pocket_home }}"
+    shell: /sbin/nologin
+    system: yes
+    create_home: no
+    comment: Pocket user
+
+- name: Create Pocket home directory
+  ansible.builtin.file:
+    path: "{{ pocket_home }}"
+    state: directory
+    owner: pocket
+    group: pocket
+    mode: 0750
+
+- name: Create Pocket service file
+  ansible.builtin.template:
+    src: pocket.service.j2
+    dest: /etc/systemd/system/pocket.service
+
+- name: Enable Pocket service
+  ansible.builtin.service:
+    name: pocket
+    state: stopped
+    enabled: yes
+    daemon_reload: yes
+
+- name: Create nftables config for Pocket
+  ansible.builtin.template:
+    src: nftables/pocket.conf.j2
+    dest: /etc/nftables.d/pocket.conf
+    mode: 0640
+  notify:
+    - Restart nftables

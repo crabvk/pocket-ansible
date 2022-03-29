@@ -1,0 +1,19 @@
+- name: Request Pocket releases list
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/pokt-network/pocket-core/releases
+    headers:
+      Accept: application/vnd.github.v3+json
+  register: releases_list
+
+- name: Get Pocket version
+  ansible.builtin.command:
+    cmd: "{{ pocket_binary }} version"
+  register: pocket_version
+
+- name: Fail when Pocket version is outdated
+  ansible.builtin.fail:
+    msg: "Your Pocket version {{ current }} differ from the latest {{ latest }}"
+  vars:
+    current: "{{ pocket_version.stdout | regex_search('^AppVersion:\\s*(.+)$', '\\1') | first }}"
+    latest: "{{ releases_list.json | community.general.json_query('[0].tag_name') }}"
+  when: "current != latest"

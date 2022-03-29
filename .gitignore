@@ -1,0 +1,4 @@
+/hosts
+/hosts.yaml
+/host_vars/*
+!/host_vars/host.example.yaml

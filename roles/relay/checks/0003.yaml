@@ -1,0 +1,4 @@
+- name: Fail when response is incorrect
+  ansible.builtin.fail:
+    msg: Result must contain correct blockchainID
+  when: json.result.blockchainID != '2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM'

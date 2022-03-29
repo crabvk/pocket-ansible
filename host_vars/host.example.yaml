@@ -1,0 +1,21 @@
+# Set custom SSH port if your SSH server uses not default port.
+# IMPORTANT: This setting affects firewall.
+# sshd_port: 2020
+
+# Fully qualified domain name (FQDN) of your Pocket server.
+# NOTE: DNS record for this name must exist beforehand. See docs/dns-record.md for more info.
+pocket_host: node1.pokt.example.com
+
+# Set to `yes` if you obtained certificate with certbot.
+certbot: yes
+
+# Set custom paths to SSL certificate files if you didn't use certbot.
+# For more details see
+# https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate
+pocket_ssl_cert: /path/to/ssl_certificate
+pocket_ssl_cert_key: /path/to/ssl_certificate_key
+
+# Other variables with default values you might want to change
+# pocket_home: /var/lib/pocket
+# pocket_rpc_port: 8081
+# pocket_p2p_port: 26656

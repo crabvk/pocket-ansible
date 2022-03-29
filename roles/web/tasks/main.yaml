@@ -1,0 +1,39 @@
+- name: Install Nginx
+  ansible.builtin.package:
+    name: nginx
+
+- name: Copy nftables config for HTTP(S)
+  ansible.builtin.copy:
+    src: nftables/http.conf
+    dest: /etc/nftables.d/http.conf
+    mode: 0640
+  notify:
+    - Restart nftables
+
+- name: Create Nginx config
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0640
+  notify:
+    - Restart Nginx
+
+- name: Copy Nginx subconfigs
+  ansible.builtin.copy:
+    src: nginx/{{ item }}
+    dest: /etc/nginx/
+    mode: 0640
+  loop:
+    - options-ssl-nginx.conf
+    - proxy-common.conf
+  notify:
+    - Restart Nginx
+
+- name: Copy certbot challenge subconfig
+  ansible.builtin.copy:
+    src: nginx/certbot-challenge.conf
+    dest: /etc/nginx/
+    mode: 0640
+  when: "certbot"
+  notify:
+    - Restart Nginx

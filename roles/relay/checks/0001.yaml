@@ -1,0 +1,4 @@
+- name: Fail when response is incorrect
+  ansible.builtin.fail:
+    msg: Result must be greater than 0
+  when: json.height == 0

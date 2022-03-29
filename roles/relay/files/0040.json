@@ -1,0 +1,9 @@
+{
+    "relay_network_id": "0040",
+    "payload": {
+        "data": "{\"jsonrpc\":\"2.0\",\"method\":\"hmyv2_getBalance\",\"params\":[\"one15vlc8yqstm9algcf6e94dxqx6y04jcsqjuc3gt\"],\"id\":1}",
+        "method": "POST",
+        "path": "",
+        "headers": {}
+    }
+}

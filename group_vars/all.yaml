@@ -1,0 +1,5 @@
+pocket_home: /var/lib/pocket
+pocket_rpc_port: 8081
+dns_servers:
+  - 84.200.69.80
+  - 84.200.70.40
