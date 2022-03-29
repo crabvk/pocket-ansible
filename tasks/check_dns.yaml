@@ -1,4 +1,4 @@
-- name: Fail when DNS record differs from Pocket host IP
+- name: Fail when DNS record differs from Pocket host IPv4
   ansible.builtin.fail:
     msg: |
       DNS record of {{ pocket_host }} does not match host IP address {{ ansible_default_ipv4.address }}

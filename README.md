@@ -74,7 +74,7 @@ If you don't already have an SSL certificate for your domain, here are instructi
 
 * Build Pocket and install the binary
 
-    - Read [instructions in the official guide](https://docs.pokt.network/home/paths/node-runner#software)
+    - Follow [instructions in the official guide](https://docs.pokt.network/home/paths/node-runner#software)
     - Copy Pocket binary to /usr/local/bin directory or if it's not in the PATH set `pocket_path` variable in *host_vars/&lt;host&gt;.yaml*
 
 * Configure your SSH server
@@ -111,6 +111,9 @@ ansible-playbook -i hosts setup.yaml
 ```shell
 sudo -u pocket bash
 ```
+
+> WARNING: Don't forget to check your Pocket node's config file at *~/.pocket/config/config.json*  
+> It is auto-generated within the "Create an account" step.
 
 ## Check the correctness of your setup
 

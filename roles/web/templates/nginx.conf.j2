@@ -9,9 +9,10 @@ events {
 http {
     include mime.types;
     default_type application/octet-stream;
+    error_log syslog:server=unix:/dev/log;
+    access_log syslog:server=unix:/dev/log;
     server_tokens off;
     keepalive_timeout 75s;
-    access_log /var/log/nginx/access.log;
     types_hash_max_size 4096;
     include options-ssl-nginx.conf;
 
@@ -34,7 +35,7 @@ http {
         {% else %}
         ssl_certificate {{ pocket_ssl_cert }};
         ssl_certificate_key {{ pocket_ssl_cert_key }};
-        {% endif %}
+        {% endif -%}
         try_files $uri index.html;
         {% if certbot -%}
         include certbot-challenge.conf;

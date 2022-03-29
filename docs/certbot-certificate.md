@@ -10,6 +10,9 @@ Set Nginx configuration */etc/nginx/nginx.conf* to:
 events {}
 
 http {
+    error_log syslog:server=unix:/dev/log;
+    access_log syslog:server=unix:/dev/log;
+
     server {
         listen 80 default_server;
         try_files $uri index.html;
@@ -21,7 +24,7 @@ http {
 }
 ```
 
-NOTE: prepend each of the following commands with `sudo` if your current user isn't root.
+> NOTE: prepend each of the following commands with `sudo` if your current user isn't root.
 
 Restart Nginx:
 
@@ -42,8 +45,11 @@ domain=node1.pokt.example.com
 email=name@example.com
 ```
 
-Obtain certificate with certbot:
+Obtain a certificate with certbot:
 
 ```shell
 certbot certonly --webroot -w /usr/share/nginx/html -d $domain -n --agree-tos -m $email
 ```
+
+> NOTE: There is a Failed Validation limit of 5 failures per account, per hostname, per hour.
+> If you get "too many failed authorizations recently" error from the certbot, wait for one hour or choose another subdomain and try again.
