@@ -144,5 +144,5 @@ Managed node: Arch Linux, Ubuntu 20.04
 ## Contributions
 
 Contributions are very welcome.
-Feel free to create an issue if you found a bug, want to request a feature, or have a question.  
+Feel free to create an issue if you found a bug, want to request a feature, or have a question.
 You can also contact me on [Telegram](https://t.me/crabvk) or [Discord](https://discordapp.com/users/801675841397325834).

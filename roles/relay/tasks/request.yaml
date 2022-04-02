@@ -1,11 +1,11 @@
-- name: Make request for chain {{ item.id }}
+- name: Make request for chain {{ item }}
   ansible.builtin.uri:
     url: http://127.0.0.1:{{ pocket_rpc_port }}/v1/client/sim
     method: POST
-    body: "{{ lookup('file', item.id ~ '.json') }}"
+    body: "{{ lookup('file', item ~ '.json') }}"
     body_format: json
   register: response
 
-- include_tasks: checks/{{ item.id }}.yaml
+- include_tasks: checks/{{ item }}.yaml
   vars:
     json: "{{ response.json | from_json }}"

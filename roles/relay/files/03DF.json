@@ -1,0 +1,9 @@
+{
+    "relay_network_id": "03DF",
+    "payload": {
+        "data": "{\"jsonrpc\":\"2.0\",\"method\":\"eth_blockNumber\",\"id\":1}",
+        "method": "POST",
+        "path": "",
+        "headers": {}
+    }
+}
