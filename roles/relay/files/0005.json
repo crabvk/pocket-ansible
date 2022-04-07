@@ -1,0 +1,9 @@
+{
+    "relay_network_id": "0005",
+    "payload": {
+        "data": "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"0x73EbE7df3700af92b04A81D5Cc60fB4a541F81Ca\",\"latest\"],\"id\":1}",
+        "method": "POST",
+        "path": "",
+        "headers": {}
+    }
+}

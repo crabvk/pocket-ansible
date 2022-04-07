@@ -1,3 +1,4 @@
+pocket_host: "{{ undef(hint='You must specify your Pocket node host name') }}"
 pocket_home: /var/lib/pocket
 pocket_rpc_port: 8081
 dns_servers:
