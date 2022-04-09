@@ -16,4 +16,4 @@
   vars:
     current: "{{ pocket_version.stdout | regex_search('^AppVersion:\\s*(.+)$', '\\1') | first }}"
     latest: "{{ releases_list.json | community.general.json_query('[0].tag_name') }}"
-  when: "current != latest"
+  when: current != latest

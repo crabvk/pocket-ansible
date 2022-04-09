@@ -5,4 +5,4 @@
       DNS record: {{ pocket_host_ipv4 | join(', ') }}
   vars:
     pocket_host_ipv4: "{{ lookup('community.general.dig', pocket_host, '@' ~ dns_servers | join(','), wantlist=True) }}"
-  when: "ansible_default_ipv4.address not in pocket_host_ipv4"
+  when: ansible_default_ipv4.address not in pocket_host_ipv4
