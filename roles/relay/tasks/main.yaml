@@ -30,17 +30,21 @@
     url: http://127.0.0.1:{{ pocket_rpc_port }}/v1/query/height
     method: POST
     body_format: json
-  register: current_height
+  register: current_height_response
 
 - name: Request public Pocket block height
   ansible.builtin.uri:
     url: https://supply.research.pokt.network:8192/height
-  register: public_height
+    return_content: true
+  register: public_height_response
 
 - name: Fail when Pocket node is not fully synced
   ansible.builtin.fail:
-    msg: "Pocket node is not fully synced. Current height: {{ current_height.json.height }}, public height: {{ public_height.json }}"
-  when: current_height.json.height not in range(public_height.json - 1, public_height.json + 2)
+    msg: "Pocket node is not fully synced. Current height: {{ current_height }}, public height: {{ public_height }}"
+  vars:
+    current_height: "{{ current_height_response.json.height }}"
+    public_height: "{{ public_height_response.content }}"
+  when: (current_height | int) not in range((public_height | int) - 1, (public_height | int) + 2)
 
 - name: Read Pocket chains file
   ansible.builtin.slurp:
